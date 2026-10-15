@@ -1,0 +1,10 @@
+{
+  "name": "My Language Notebook",
+  "short_name": "Language Notes",
+  "description": "Sổ tay ngoại ngữ cá nhân với luyện nghe và ôn tập",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7f8f5",
+  "theme_color": "#245a45",
+  "icons": []
+}

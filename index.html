@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#245a45">
+<link rel="manifest" href="manifest.json">
+<title>My Language Notebook</title>
+<style>
+:root{--green:#245a45;--mint:#e5f1e9;--paper:#f7f8f5;--ink:#203129;--muted:#66756c;--line:#dfe6df;--white:#fff;--orange:#f2b36f;--red:#a94442}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 14px;background:var(--green);color:white;font-weight:650}button.secondary{background:var(--mint);color:var(--green)}button.ghost{background:transparent;color:var(--green);border:1px solid var(--line)}button.danger{background:#f8e7e5;color:var(--red)}button:disabled{opacity:.45;cursor:not-allowed}
+header{background:var(--green);color:#fff;padding:20px max(18px,calc((100% - 1040px)/2));padding-top:calc(18px + env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;gap:12px}header h1{font-size:20px;margin:0}header p{margin:3px 0 0;color:#dcebe1;font-size:13px}.pill{font-size:12px;background:#ffffff20;border-radius:999px;padding:6px 10px;white-space:nowrap}
+.app{max-width:1040px;margin:auto;padding:18px 14px 96px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:0 0 18px}.tab{background:#fff;color:var(--muted);border:1px solid var(--line);padding:10px 4px;font-size:12px}.tab.active{background:var(--mint);border-color:#9bbba6;color:var(--green)}.tab span{display:block;font-size:19px;margin-bottom:2px}
+.panel{display:none}.panel.active{display:block}.hero{background:linear-gradient(135deg,#e5f1e9,#fff);border:1px solid #d8e8dc;border-radius:20px;padding:22px;margin-bottom:16px}.hero h2{font-size:25px;line-height:1.2;margin:0 0 8px}.hero p{margin:0 0 16px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.stat,.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px}.stat strong{font-size:25px;display:block}.stat span{color:var(--muted);font-size:13px}.card h3{margin:0 0 12px;font-size:17px}.stack{display:grid;gap:12px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.between{display:flex;align-items:center;justify-content:space-between;gap:10px}.field{display:grid;gap:5px;margin-bottom:11px}.field label{font-size:13px;font-weight:700;color:#405248}.field input,.field textarea,.field select,.search{width:100%;padding:11px 12px;border:1px solid #ccd8ce;border-radius:11px;background:#fff;color:var(--ink)}textarea{min-height:78px;resize:vertical}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.word-list{display:grid;gap:9px}.word{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.word .term{font-weight:750;font-size:18px}.word .meaning{color:var(--green);margin-top:3px}.word .meta{font-size:12px;color:var(--muted);margin-top:7px}.word .actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.word .actions button{font-size:12px;padding:7px 10px}.badge{background:#f3f0df;color:#756324;border-radius:999px;padding:3px 8px;font-size:11px}.empty{text-align:center;padding:25px;color:var(--muted)}.review-card{max-width:600px;margin:0 auto;text-align:center;padding:26px 18px}.review-term{font-size:28px;font-weight:800;margin:20px 0}.review-meaning{font-size:20px;margin:18px 0}.progress{height:7px;background:#e7ece7;border-radius:99px;overflow:hidden;margin:12px 0}.progress div{height:100%;background:var(--green);width:0}.notice{padding:11px 13px;background:#fff7df;border:1px solid #f0dfaa;border-radius:12px;font-size:13px;margin-bottom:12px}.success{background:#e8f4eb;border-color:#c7e0ce}.danger-text{color:var(--red)}.hidden{display:none!important}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0}
+@media(min-width:760px){.app{padding-top:24px}.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.tabs{max-width:740px}.word-list{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h2{font-size:31px}}
+@media(max-width:420px){.tab{font-size:11px}.grid{gap:7px}.stat{padding:12px 10px}.stat strong{font-size:22px}.hero{padding:18px}.settings-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div><h1>📚 My Language Notebook</h1><p>Sổ tay ngoại ngữ của riêng bạn</p></div><span class="pill" id="syncBadge">● Lưu trên thiết bị</span></header>
+<main class="app">
+<nav class="tabs" aria-label="Điều hướng">
+<button class="tab active" data-tab="home"><span>⌂</span>Trang chủ</button>
+<button class="tab" data-tab="notes"><span>✎</span>Ghi chú</button>
+<button class="tab" data-tab="listen"><span>♫</span>Nghe & nói</button>
+<button class="tab" data-tab="review"><span>▣</span>Ôn tập</button>
+<button class="tab" data-tab="stats"><span>▥</span>Tiến độ</button>
+</nav>
+
+<section class="panel active" id="home">
+<div class="hero"><h2>Học một chút mỗi ngày 🌱</h2><p>Lưu từ/câu bạn gặp trong công việc hoặc cuộc sống, rồi luyện nghe và ôn lại đúng lúc.</p><div class="row"><button data-goto="notes">＋ Thêm ghi chú</button><button class="secondary" data-goto="review">Bắt đầu ôn tập →</button></div></div>
+<div class="grid"><div class="stat"><strong id="statTotal">0</strong><span>Từ/câu đã lưu</span></div><div class="stat"><strong id="statDue">0</strong><span>Đến hạn ôn hôm nay</span></div><div class="stat"><strong id="statStreak">0</strong><span>Ngày học liên tiếp*</span></div></div>
+<div class="layout"><div class="card"><h3>⚡ Học nhanh 5 phút</h3><p class="muted">1. Thêm 3 câu thực tế · 2. Nghe từng câu · 3. Ôn thẻ đến hạn.</p><button data-goto="review">Ôn những mục đến hạn</button></div><div class="card"><h3>💡 Mẹo học</h3><p class="muted">Lưu cả câu hoàn chỉnh thay vì chỉ một từ. Ví dụ: “Could you please confirm the delivery date?” Ghi thêm tình huống sử dụng để nhớ lâu hơn.</p></div></div>
+<p class="muted">*Chuỗi ngày được tính từ các ngày bạn đánh dấu đã ôn trong ứng dụng này.</p>
+</section>
+
+<section class="panel" id="notes">
+<div class="card">
+<div class="between"><h3 id="formTitle">＋ Thêm từ hoặc câu</h3><button class="ghost" id="clearForm">Làm mới</button></div>
+<form id="noteForm">
+<input type="hidden" id="editId">
+<div class="settings-grid">
+<div class="field"><label for="lang">Ngôn ngữ</label><select id="lang"><option value="en-US">English (US)</option><option value="en-GB">English (UK)</option><option value="ja-JP">日本語 · Japanese</option><option value="ko-KR">한국어 · Korean</option><option value="zh-CN">中文 · Chinese</option><option value="fr-FR">Français · French</option><option value="de-DE">Deutsch · German</option><option value="es-ES">Español · Spanish</option><option value="vi-VN">Tiếng Việt</option><option value="other">Khác / Other</option></select></div>
+<div class="field"><label for="category">Chủ đề</label><select id="category"><option>Công việc</option><option>Email</option><option>Giao tiếp</option><option>Logistics</option><option>Du lịch</option><option>Đời sống</option><option>Khác</option></select></div>
+</div>
+<div class="field"><label for="term">Từ hoặc câu ngoại ngữ *</label><input id="term" required placeholder="Ví dụ: Please find attached..."></div>
+<div class="field"><label for="meaning">Nghĩa tiếng Việt *</label><input id="meaning" required placeholder="Ví dụ: Vui lòng xem file đính kèm..."></div>
+<div class="settings-grid"><div class="field"><label for="pron">Phiên âm (tuỳ chọn)</label><input id="pron" placeholder="IPA / cách đọc"></div><div class="field"><label for="example">Câu ví dụ / ngữ cảnh</label><input id="example" placeholder="Dùng khi gửi email..."></div></div>
+<div class="field"><label for="memo">Ghi chú cá nhân</label><textarea id="memo" placeholder="Từ đồng nghĩa, lỗi hay gặp, nguồn..."></textarea></div>
+<div class="row"><button type="submit" id="saveBtn">Lưu ghi chú</button><span class="muted" id="formStatus"></span></div>
+</form></div>
+<div class="card" style="margin-top:14px"><div class="between"><h3>📒 Sổ tay của tôi</h3><span class="muted" id="listCount">0 mục</span></div><input class="search" id="search" placeholder="Tìm từ, nghĩa, chủ đề..."><div class="row" style="margin:10px 0"><select id="filterLang" class="search" style="max-width:230px"><option value="">Tất cả ngôn ngữ</option><option value="en-US">English (US)</option><option value="en-GB">English (UK)</option><option value="ja-JP">Japanese</option><option value="ko-KR">Korean</option><option value="zh-CN">Chinese</option><option value="fr-FR">French</option><option value="de-DE">German</option><option value="es-ES">Spanish</option><option value="vi-VN">Vietnamese</option><option value="other">Khác</option></select><button class="secondary" id="exportBtn" type="button">Xuất sao lưu</button><button class="ghost" id="importBtn" type="button">Nhập JSON</button><input type="file" id="importFile" accept=".json,application/json" class="hidden"></div><div id="wordList" class="word-list"></div></div>
+</section>
+
+<section class="panel" id="listen">
+<div class="card"><h3>🎧 Nghe & luyện nói</h3><p class="muted">Chọn một mục trong sổ tay, nghe giọng đọc của thiết bị rồi thử đọc theo. Tính năng phụ thuộc trình duyệt và giọng ngôn ngữ đã cài.</p>
+<div class="field"><label for="listenSelect">Chọn từ/câu</label><select id="listenSelect"></select></div>
+<div class="field"><label for="listenText">Văn bản để luyện</label><textarea id="listenText" placeholder="Chọn mục ở trên hoặc nhập câu..."></textarea></div>
+<div class="settings-grid"><div class="field"><label for="voiceLang">Ngôn ngữ đọc</label><select id="voiceLang"><option value="en-US">English (US)</option><option value="en-GB">English (UK)</option><option value="ja-JP">Japanese</option><option value="ko-KR">Korean</option><option value="zh-CN">Chinese</option><option value="fr-FR">French</option><option value="de-DE">German</option><option value="es-ES">Spanish</option><option value="vi-VN">Vietnamese</option></select></div><div class="field"><label for="speed">Tốc độ đọc: <span id="speedValue">0.85×</span></label><input id="speed" type="range" min="0.55" max="1.2" step="0.05" value="0.85"></div></div>
+<div class="row"><button id="speakBtn">▶ Nghe mẫu</button><button class="secondary" id="stopSpeak">■ Dừng</button><button class="ghost" id="recordBtn">● Ghi âm giọng tôi</button></div><div id="recordStatus" class="notice hidden" style="margin-top:12px"></div><audio id="playback" controls class="hidden" style="width:100%;margin-top:12px"></audio><p class="muted">Ghi âm được giữ trong phiên hiện tại; hãy tải xuống nếu muốn lưu lại. Nhận diện lời nói cần trình duyệt hỗ trợ và thường cần mạng.</p>
+<div class="field"><label for="speechResult">Kết quả nhận diện (nếu trình duyệt hỗ trợ)</label><textarea id="speechResult" placeholder="Kết quả sẽ hiện ở đây..."></textarea></div><button id="recognizeBtn" class="secondary">🎙 Nhận diện lời nói</button><span class="muted" id="recognizeStatus"></span>
+</div>
+</section>
+
+<section class="panel" id="review">
+<div class="card review-card"><h3>🧠 Ôn tập cách quãng</h3><p class="muted" id="reviewCounter">Chưa có mục đến hạn</p><div class="progress"><div id="reviewProgress"></div></div><div id="reviewArea"><div class="empty">Thêm vài từ hoặc câu trong mục Ghi chú, sau đó quay lại đây để ôn.</div></div></div>
+</section>
+
+<section class="panel" id="stats">
+<div class="grid"><div class="stat"><strong id="sTotal">0</strong><span>Tổng mục</span></div><div class="stat"><strong id="sMastered">0</strong><span>Đã ôn ít nhất 5 lần</span></div><div class="stat"><strong id="sReviews">0</strong><span>Lượt ôn đã hoàn thành</span></div></div>
+<div class="card"><h3>📈 Tiến độ của bạn</h3><div class="field"><label>Phân bổ theo ngôn ngữ</label><div id="langStats" class="stack"></div></div><div class="field"><label>Hoạt động 7 ngày gần nhất</label><div id="weekStats" class="stack"></div></div><p class="muted">Tiến độ dựa trên dữ liệu đã lưu trong ứng dụng trên thiết bị hiện tại hoặc dữ liệu đã đồng bộ.</p></div>
+<div class="card" style="margin-top:14px"><h3>☁️ Đồng bộ giữa điện thoại và máy tính</h3><div class="notice">Bản mẫu hiện lưu trên thiết bị. Để đồng bộ qua Internet, bạn cần tạo một dự án Supabase miễn phí và nhập URL + anon key bên dưới. Không dùng service_role key ở đây.</div><div class="field"><label for="supabaseUrl">Supabase Project URL</label><input id="supabaseUrl" placeholder="https://xxxx.supabase.co"></div><div class="field"><label for="supabaseKey">Supabase anon/public key</label><input id="supabaseKey" placeholder="sb_publishable_... hoặc anon key" type="password"></div><div class="row"><button id="connectBtn">Kết nối / đồng bộ</button><button id="disconnectBtn" class="ghost">Ngắt kết nối</button></div><p class="muted" id="syncStatus">Chưa cấu hình đồng bộ.</p><p class="muted small">Hướng dẫn chi tiết nằm trong README.txt trong gói tải về. Phiên bản mẫu dùng đăng nhập email bằng OTP để bảo vệ dữ liệu cá nhân.</p></div>
+<div class="card" style="margin-top:14px"><h3>🛡️ Quản lý dữ liệu</h3><div class="row"><button id="backupBtn" class="secondary">Tải bản sao lưu JSON</button><button id="clearAllBtn" class="danger">Xoá toàn bộ dữ liệu trên thiết bị</button></div><p class="muted">Nên xuất bản sao lưu định kỳ. Xoá dữ liệu trên thiết bị không tự động xoá bản đồng bộ trên máy chủ.</p></div>
+</section>
+<div class="footer">My Language Notebook · Bản mẫu cá nhân · Dữ liệu là của bạn</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+</body></html>
